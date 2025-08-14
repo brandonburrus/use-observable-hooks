@@ -1,17 +1,8 @@
 import { useObservable } from '../lib/use-observable';
 import { renderHook, cleanup } from '@testing-library/react';
 import { of, delay, EMPTY } from 'rxjs';
-import { TestScheduler } from 'rxjs/testing';
 
 describe('useObservable', () => {
-  let testScheduler: TestScheduler;
-
-  beforeEach(() => {
-    testScheduler = new TestScheduler((actual, expected) => {
-      expect(actual).toEqual(expected);
-    })
-  });
-
   afterEach(cleanup);
 
   test('initializes with an initial value as the state', () => {
@@ -56,5 +47,11 @@ describe('useObservable', () => {
     expect(onUnsubscribe).toHaveBeenCalledWith('state', undefined);
     expect(onUnsubscribe).toHaveBeenCalledTimes(1);
     expect(result.current[0]).toBe('state');
+  })
+
+  test('default state value is undefined when no initial value is provided', () => {
+    const { result } = renderHook(() => useObservable(of('test').pipe(delay(1))));
+
+    expect(result.current[0]).toBeUndefined();
   })
 })
