@@ -13,6 +13,9 @@
     "test:watch": "jest --watch",
     "typecheck": "tsc --noEmit"
   },
+  "files": [
+    "dist"
+  ],
   "homepage": "https://github.com/brandonburrus/use-observable-hooks",
   "repository": {
     "type": "git",
